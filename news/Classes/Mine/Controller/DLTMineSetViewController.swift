@@ -86,6 +86,16 @@ class DLTMineSetViewController: UITableViewController {
                     cell.rightLabel.text = fontSize
                     self.changeFontSize()
                 }
+            case 3:
+                ///设置非wifi网络流量模式
+                setupNetWorkAlertController { (netMode) in
+                    cell.rightLabel.text = netMode
+                }
+            case 4:
+                ///设置非WIFI网络播放提醒
+                setupPlayNoticeAlertController { (playNotice) in
+                    cell.rightLabel.text = playNotice
+                }
             default:
                 break
             }
@@ -162,6 +172,42 @@ extension DLTMineSetViewController{
     ///改变字体大小
    fileprivate func changeFontSize() {
         print("改变系统字体大小")
+    }
+    
+    ///设置非wifi网络流量
+    fileprivate func setupNetWorkAlertController(netMode: @escaping (String)->()) {
+        let alertController = UIAlertController(title: "非WIFI网络流量", message: nil, preferredStyle: .actionSheet)
+        let cacelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let bestAction = UIAlertAction(title: "最佳效果（下载大图）", style: .default) { (_) in
+            netMode("最佳效果（下载大图）")
+        }
+        let betterAction = UIAlertAction(title: "较省流量（智能下图）", style: .default) { (_) in
+            netMode("较省流量（智能下图）")
+        }
+        let leastAction = UIAlertAction(title: "极省流量（智能下图）", style: .default) { (_) in
+            netMode("极省流量（智能下图）")
+        }
+        alertController.addAction(cacelAction)
+        alertController.addAction(leastAction)
+        alertController.addAction(betterAction)
+        alertController.addAction(bestAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    ///设置非wifi网络播放提醒
+    ///测试东西
+    fileprivate func setupPlayNoticeAlertController(playNotice: @escaping (String)->()) {
+        let alertController = UIAlertController(title: "非WIFI网络播放提醒", message: nil, preferredStyle: .actionSheet)
+        let cacelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let everyAction = UIAlertAction(title: "每次提醒", style: .default) { (_) in
+            playNotice("每次提醒")
+        }
+        let onceAction = UIAlertAction(title: "提醒一次", style: .default) { (_) in
+            playNotice("提醒一次")
+        }
+        alertController.addAction(cacelAction)
+        alertController.addAction(everyAction)
+        alertController.addAction(onceAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
