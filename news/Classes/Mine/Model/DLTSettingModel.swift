@@ -16,5 +16,6 @@ struct SettingModel: HandyJSON {
     var isHiddenSubtitle: Bool = false
     var isHiddenRightTitle: Bool = false
     var isHiddenRightArraw: Bool = false
-    var isHiddenSwitch: Bool = false    
+    var isHiddenSwitch: Bool = false
+    
 }

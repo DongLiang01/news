@@ -30,6 +30,10 @@
 		84580AF3211AD6B4006D5FA1 /* DLTSettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AF2211AD6B4006D5FA1 /* DLTSettingModel.swift */; };
 		84580AF6211AE073006D5FA1 /* DLTSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AF4211AE073006D5FA1 /* DLTSettingCell.swift */; };
 		84580AF7211AE073006D5FA1 /* DLTSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84580AF5211AE073006D5FA1 /* DLTSettingCell.xib */; };
+		84580AF92123C6D3006D5FA1 /* DLTOfflineDownController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AF82123C6D3006D5FA1 /* DLTOfflineDownController.swift */; };
+		84580AFC2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AFA2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift */; };
+		84580AFD2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84580AFB2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib */; };
+		84580AFF21241C36006D5FA1 /* DLTHomeNewsTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AFE21241C36006D5FA1 /* DLTHomeNewsTitle.swift */; };
 		84C397C42101873500BFB022 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C397C32101873500BFB022 /* AppDelegate.swift */; };
 		84C397C62101873500BFB022 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C397C52101873500BFB022 /* ViewController.swift */; };
 		84C397C92101873500BFB022 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C397C72101873500BFB022 /* Main.storyboard */; };
@@ -92,6 +96,10 @@
 		84580AF2211AD6B4006D5FA1 /* DLTSettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTSettingModel.swift; sourceTree = "<group>"; };
 		84580AF4211AE073006D5FA1 /* DLTSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTSettingCell.swift; sourceTree = "<group>"; };
 		84580AF5211AE073006D5FA1 /* DLTSettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DLTSettingCell.xib; sourceTree = "<group>"; };
+		84580AF82123C6D3006D5FA1 /* DLTOfflineDownController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTOfflineDownController.swift; sourceTree = "<group>"; };
+		84580AFA2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTOfflineDownLoadCell.swift; sourceTree = "<group>"; };
+		84580AFB2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DLTOfflineDownLoadCell.xib; sourceTree = "<group>"; };
+		84580AFE21241C36006D5FA1 /* DLTHomeNewsTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTHomeNewsTitle.swift; sourceTree = "<group>"; };
 		84C397C02101873500BFB022 /* news.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = news.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C397C32101873500BFB022 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84C397C52101873500BFB022 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +267,7 @@
 		84C397F421018CD400BFB022 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				84580AFE21241C36006D5FA1 /* DLTHomeNewsTitle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -363,6 +372,7 @@
 				84580AEA2117E540006D5FA1 /* DLTMyLoginViewController.swift */,
 				84580AEC2117E607006D5FA1 /* DLTMyLoginViewController.storyboard */,
 				84580AEE211AC9DC006D5FA1 /* DLTMineSetViewController.swift */,
+				84580AF82123C6D3006D5FA1 /* DLTOfflineDownController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -389,6 +399,8 @@
 				84355BA7210AEB6E0065C6BA /* NoLoginHeaderView.xib */,
 				84580AF4211AE073006D5FA1 /* DLTSettingCell.swift */,
 				84580AF5211AE073006D5FA1 /* DLTSettingCell.xib */,
+				84580AFA2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift */,
+				84580AFB2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -567,6 +579,7 @@
 				84580AE921100777006D5FA1 /* night_theme.plist in Resources */,
 				84580AE721100747006D5FA1 /* default_theme.plist in Resources */,
 				84355BA8210AEB6E0065C6BA /* NoLoginHeaderView.xib in Resources */,
+				84580AFD2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,9 +678,12 @@
 				84C3980C2101A66F00BFB022 /* DLTHomeViewController.swift in Sources */,
 				84C397C42101873500BFB022 /* AppDelegate.swift in Sources */,
 				84355B922108736F0065C6BA /* DLTMyCellModel.swift in Sources */,
+				84580AFF21241C36006D5FA1 /* DLTHomeNewsTitle.swift in Sources */,
 				84C398172101E2A000BFB022 /* UIColor+Extension.swift in Sources */,
 				84580AF6211AE073006D5FA1 /* DLTSettingCell.swift in Sources */,
 				84355B9521096E7B0065C6BA /* DLTMyOtherCell.swift in Sources */,
+				84580AF92123C6D3006D5FA1 /* DLTOfflineDownController.swift in Sources */,
+				84580AFC2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift in Sources */,
 				84580AEB2117E540006D5FA1 /* DLTMyLoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

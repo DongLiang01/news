@@ -11,6 +11,11 @@ import Alamofire   ///Alamofire默认的是get请求
 import SwiftyJSON
 
 protocol NetWorkToolProtocol {
+    
+    //------------------------------ 首页home ----------------------------------------
+    ///首页顶部新闻标题数据
+    static func loadHomeNewsTitleData(completionHandler: @escaping (_ newsTitles: [DLTHomeNewsTitle]) -> ())
+    //------------------------------ 我的mine ----------------------------------------
     ///我的界面中cell的数据
     static func loadMyCellData(completionHandler: @escaping (_ sections: [[MyCellModel]]) -> ())
     ///我的关注数据
@@ -19,6 +24,7 @@ protocol NetWorkToolProtocol {
 
 extension NetWorkToolProtocol {
     
+    //------------------------------ 我的mine ----------------------------------------
     ///我的界面中cell的数据
     static func loadMyCellData(completionHandler:@escaping (_ sections: [[MyCellModel]]) -> ()){
         print("获取cell的数据")
@@ -82,6 +88,34 @@ extension NetWorkToolProtocol {
             }
         }
         
+    }
+    
+    //------------------------------ 首页home ----------------------------------------
+    ///首页顶部新闻标题数据
+    static func loadHomeNewsTitleData(completionHandler: @escaping (_ newsTitles: [DLTHomeNewsTitle]) -> ()){
+        let url = BASE_URL + "/article/category/get_subscribed/v1/?"
+        let params = ["device_id" : device_id]
+        Alamofire.request(url, parameters:params).responseJSON { (response) in
+            guard response.result.isSuccess else{
+                return
+            }
+            if let value = response.result.value {
+                let json = JSON(value)
+                guard json["message"] == "success" else {
+                    return
+                }
+                if let data = json["data"].dictionary {
+                    if let responseObject = data["data"]?.arrayObject {
+                        var rowArray = [DLTHomeNewsTitle]()
+                        for dic in responseObject {
+                            let model = DLTHomeNewsTitle.deserialize(from: dic as? Dictionary)
+                            rowArray.append(model!)
+                        }
+                        completionHandler(rowArray)
+                    }
+                }
+            }
+        }
     }
     
 }

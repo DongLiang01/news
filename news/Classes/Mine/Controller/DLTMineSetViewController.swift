@@ -99,6 +99,15 @@ class DLTMineSetViewController: UITableViewController {
             default:
                 break
             }
+        case 1:
+            switch indexPath.row {
+            case 0:
+                let vc = DLTOfflineDownController()
+                vc.navigationItem.title = "离线下载"
+                navigationController?.pushViewController(vc, animated: true)
+            default:
+                break
+            }
         default:
             break
         }

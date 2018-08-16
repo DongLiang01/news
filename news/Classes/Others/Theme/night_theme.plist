@@ -67,6 +67,10 @@
 		<string>mailbox_sdk_login_night_40x40_</string>
 		<key>navgationLeftButton</key>
 		<string>lefterbackicon_titlebar_night_24x24_</string>
+		<key>offlineDownLoadTip</key>
+		<string>air_download_option_night_20x20_</string>
+		<key>offlineDownLoadTipChoose</key>
+		<string>air_download_option_press_night_20x20_</string>
 	</dict>
 </dict>
 </plist>
