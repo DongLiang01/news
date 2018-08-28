@@ -19,4 +19,24 @@ target 'news' do
   pod 'SwiftTheme'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'SQLite.swift'
+  
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

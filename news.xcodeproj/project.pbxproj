@@ -34,6 +34,8 @@
 		84580AFC2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AFA2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift */; };
 		84580AFD2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84580AFB2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib */; };
 		84580AFF21241C36006D5FA1 /* DLTHomeNewsTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84580AFE21241C36006D5FA1 /* DLTHomeNewsTitle.swift */; };
+		848E9B1421339A0800A92104 /* SQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E9B1321339A0800A92104 /* SQLiteManager.swift */; };
+		848E9B1621339A4500A92104 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 848E9B1521339A4500A92104 /* libsqlite3.0.tbd */; };
 		84C397C42101873500BFB022 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C397C32101873500BFB022 /* AppDelegate.swift */; };
 		84C397C62101873500BFB022 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C397C52101873500BFB022 /* ViewController.swift */; };
 		84C397C92101873500BFB022 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C397C72101873500BFB022 /* Main.storyboard */; };
@@ -100,6 +102,8 @@
 		84580AFA2123C820006D5FA1 /* DLTOfflineDownLoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTOfflineDownLoadCell.swift; sourceTree = "<group>"; };
 		84580AFB2123C820006D5FA1 /* DLTOfflineDownLoadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DLTOfflineDownLoadCell.xib; sourceTree = "<group>"; };
 		84580AFE21241C36006D5FA1 /* DLTHomeNewsTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DLTHomeNewsTitle.swift; sourceTree = "<group>"; };
+		848E9B1321339A0800A92104 /* SQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteManager.swift; sourceTree = "<group>"; };
+		848E9B1521339A4500A92104 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		84C397C02101873500BFB022 /* news.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = news.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C397C32101873500BFB022 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84C397C52101873500BFB022 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848E9B1621339A4500A92104 /* libsqlite3.0.tbd in Frameworks */,
 				1EDF0AA9EA139E98B063997E /* Pods_news.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +170,7 @@
 		4AA1A674103BDD2BF5F92A2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				848E9B1521339A4500A92104 /* libsqlite3.0.tbd */,
 				D8E006827767EFB8A5D5FA9C /* Pods_news.framework */,
 				174E0F9A3F9FEA32872FBA56 /* Pods_newsTests.framework */,
 				4FE97D49BC384783FE353722 /* Pods_newsUITests.framework */,
@@ -457,6 +463,7 @@
 			children = (
 				84C3981B2105727200BFB022 /* NetWorkTool.swift */,
 				84580AE3210FFE5D006D5FA1 /* myTheme.swift */,
+				848E9B1321339A0800A92104 /* SQLiteManager.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -631,6 +638,7 @@
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftTheme/SwiftTheme.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -642,6 +650,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftTheme.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -672,6 +681,7 @@
 				84C3981921055F2B00BFB022 /* const.swift in Sources */,
 				84355BA3210AB33A0065C6BA /* DLTMyConcernCollectionCell.swift in Sources */,
 				84C397C62101873500BFB022 /* ViewController.swift in Sources */,
+				848E9B1421339A0800A92104 /* SQLiteManager.swift in Sources */,
 				84C3980821018D5C00BFB022 /* DLTRootTabBarController.swift in Sources */,
 				84C3980E2101ABB700BFB022 /* DLTVideoViewController.swift in Sources */,
 				84355B992109A4050065C6BA /* DLTMyFirstSectionCell.swift in Sources */,

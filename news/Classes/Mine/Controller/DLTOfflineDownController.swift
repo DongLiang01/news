@@ -54,9 +54,11 @@ class DLTOfflineDownController: UITableViewController {
         if cell.model?.flags == 0 {
             cell.rightImageView.theme_image = "images.offlineDownLoadTipChoose"
             dataArray[indexPath.row].flags = 1
+            cell.model?.flags = 1
         }else{
             cell.rightImageView.theme_image = "images.offlineDownLoadTip"
             dataArray[indexPath.row].flags = 0
+            cell.model?.flags = 0
         }
     }
     
