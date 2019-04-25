@@ -20,3 +20,14 @@ struct SQLiteManager {
         }
     }
 }
+
+/// 首页新闻分类的标题数据表
+struct NewsTitleTable {
+    
+    /// 数据库管理者
+    private let sqlManager = SQLiteManager()
+    /// 新闻标题 表
+    private let news_title = Table("news_title")
+    
+}
+

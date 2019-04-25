@@ -25,7 +25,7 @@ class DLTMineViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.tableHeaderView = headView
-        tableView.tableFooterView = UIView()
+        tableView.tableFooterView = UIView.init(frame: CGRect.zero)
         tableView.separatorStyle = .none
         tableView.theme_backgroundColor = "colors.tableViewBackgroundColor"
         //注册cell

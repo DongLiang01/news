@@ -30,7 +30,6 @@ class DLTMineSetViewController: UITableViewController {
         let str = calculateDiskCashSize { (sizeString) in
             print("缓存大小" + sizeString)
         }
-        
 
     }
 
@@ -239,7 +238,7 @@ extension DLTMineSetViewController {
         
         tableView.dl_registerCell(cell: DLTSettingCell.self)
         tableView.rowHeight = 44
-        tableView.tableFooterView = UIView()
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.separatorStyle = .none
         
         tableView.theme_backgroundColor = "colors.tableViewBackgroundColor"

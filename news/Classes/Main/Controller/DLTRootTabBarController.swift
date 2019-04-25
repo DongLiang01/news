@@ -85,7 +85,7 @@ class DLTRootTabBarController: UITabBarController {
         setChidViewController(DLTMineViewController(), title: "未登录", imageName: "no_login")
         
         //tabBar是只读属性，不能直接设置，所以使用KVC对其进行设置
-        setValue(DLTTabBar(), forKey: "tabBar")
+        setValue(DLTTabBar(frame: CGRect.zero), forKey: "tabBar")
     }
     
     func setChidViewController(_ childController:UIViewController, title:String, imageName:String) {
