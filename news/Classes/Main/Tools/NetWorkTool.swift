@@ -11,7 +11,6 @@ import Alamofire   ///Alamofire默认的是get请求
 import SwiftyJSON
 
 protocol NetWorkToolProtocol {
-    
     ///测试
     //------------------------------ 首页home ----------------------------------------
     ///首页顶部新闻标题数据
