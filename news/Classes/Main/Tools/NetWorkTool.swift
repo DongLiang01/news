@@ -12,6 +12,7 @@ import SwiftyJSON
 
 protocol NetWorkToolProtocol {
     ///测试
+    ///继续测试
     //------------------------------ 首页home ----------------------------------------
     ///首页顶部新闻标题数据
     static func loadHomeNewsTitleData(completionHandler: @escaping (_ newsTitles: [DLTHomeNewsTitle]) -> ())
