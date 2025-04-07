@@ -39,4 +39,17 @@ public enum ActivityIndicatorType: String, IBEnum {
   case semiCircleSpin
   case squareSpin
   case triangleSkewSpin
+  case circleStrokeSpin
+  case circleDashStrokeSpin
+  case gear
+  case tripleGear
+  case heartBeat
+  case triforce
+  case rupee
+  case newtonCradle
+  case circlePendulum
 }
+
+#if swift(>=4.2)
+extension ActivityIndicatorType: CaseIterable {}
+#endif

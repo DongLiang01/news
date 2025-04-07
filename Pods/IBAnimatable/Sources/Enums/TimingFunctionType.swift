@@ -38,9 +38,10 @@ extension TimingFunctionType: IBEnum {
       self = .none
       return
     }
-
-    let (name, params) = TimingFunctionType.extractNameAndParams(from: string)
-
+    guard let (name, params) = string.extractNameAndParams() else {
+      self = .none
+      return
+    }
     switch name {
     // standards
     case "linear":
@@ -56,10 +57,10 @@ extension TimingFunctionType: IBEnum {
 
     // customs
     case "spring" where params.count == 1:
-      self = .spring(damping: params[0].toFloat() ?? 0)
+      self = .spring(damping: params.toFloat(0) ?? 0)
     case "custom" where params.count == 4:
-      let c1 = (params[0].toFloat() ?? 0, params[1].toFloat() ?? 0)
-      let c2 = (params[2].toFloat() ?? 0, params[3].toFloat() ?? 0)
+      let c1 = (params.toFloat(0) ?? 0, params.toFloat(1) ?? 0)
+      let c2 = (params.toFloat(2) ?? 0, params.toFloat(3) ?? 0)
       self = .custom(c1, c2)
 
     // from http://easings.net/
@@ -135,9 +136,15 @@ extension TimingFunctionType: Hashable {
     }
   }
 
-  public var hashValue: Int {
-    return self.caType.hashValue
+  #if swift(>=4.2)
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(caType)
   }
+  #else
+  public var hashValue: Int { // swiftlint:disable:this legacy_hashing
+    return caType.hashValue
+  }
+  #endif
 }
 
 extension TimingFunctionType {
@@ -234,7 +241,7 @@ extension TimingFunctionType {
 
 extension TimingFunctionType {
 
-  var viewAnimationCurveOption: UIViewAnimationOptions? {
+  var viewAnimationCurveOption: UIView.AnimationOptions? {
     switch self {
     case .linear:
       return .curveLinear
@@ -246,6 +253,15 @@ extension TimingFunctionType {
       return .curveEaseInOut
     default:
       return nil
+    }
+  }
+
+  var isCurveOption: Bool {
+    switch self {
+    case .linear, .easeIn, .easeOut, .easeInOut:
+      return true
+    default :
+      return false
     }
   }
 
@@ -275,11 +291,11 @@ extension TimingFunctionType {
 extension CAMediaTimingFunction {
 
   // standards
-  @nonobjc public static let linear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-  @nonobjc public static let easeIn = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-  @nonobjc public static let easeOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-  @nonobjc public static let easeInOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-  @nonobjc public static let `default`  = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
+  @nonobjc public static let linear = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+  @nonobjc public static let easeIn = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
+  @nonobjc public static let easeOut = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+  @nonobjc public static let easeInOut = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+  @nonobjc public static let `default`  = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
 
   // http://easings.net/
   @nonobjc public static let easeInSine = CAMediaTimingFunction(controlPoints: 0.47, 0, 0.745, 0.715)

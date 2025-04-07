@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 
 import UIKit
 import RxSwift
@@ -21,7 +21,7 @@ public protocol RxTableViewDataSourceType /*: UITableViewDataSource*/ {
     ///
     /// - parameter tableView: Bound table view.
     /// - parameter observedEvent: Event
-    func tableView(_ tableView: UITableView, observedEvent: Event<Element>) -> Void
+    func tableView(_ tableView: UITableView, observedEvent: Event<Element>)
 }
 
 #endif

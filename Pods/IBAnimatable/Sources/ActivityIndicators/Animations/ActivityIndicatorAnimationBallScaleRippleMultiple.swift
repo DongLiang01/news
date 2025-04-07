@@ -18,6 +18,7 @@ public class ActivityIndicatorAnimationBallScaleRippleMultiple: ActivityIndicato
     let beginTime = layer.currentMediaTime
     let beginTimes = [0.0, 0.2, 0.4]
 
+    let animation = defaultAnimation
     for i in 0 ..< 3 {
       let circle = ActivityIndicatorShape.ring.makeLayer(size: size, color: color)
       let frame = CGRect(x: (layer.bounds.size.width - size.width) / 2,
@@ -37,7 +38,7 @@ public class ActivityIndicatorAnimationBallScaleRippleMultiple: ActivityIndicato
 
 private extension ActivityIndicatorAnimationBallScaleRippleMultiple {
 
-  var animation: CAAnimationGroup {
+  var defaultAnimation: CAAnimationGroup {
     let animation = CAAnimationGroup()
     animation.animations = [scaleAnimation, opacityAnimation]
     animation.duration = duration
@@ -47,7 +48,7 @@ private extension ActivityIndicatorAnimationBallScaleRippleMultiple {
   }
 
   var scaleAnimation: CAKeyframeAnimation {
-    let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+    let scaleAnimation = CAKeyframeAnimation(keyPath: .scale)
     scaleAnimation.keyTimes = [0, 0.7]
     scaleAnimation.timingFunction = timingFunction
     scaleAnimation.values = [0, 1.0]
@@ -56,7 +57,7 @@ private extension ActivityIndicatorAnimationBallScaleRippleMultiple {
   }
 
   var opacityAnimation: CAKeyframeAnimation {
-    let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+    let opacityAnimation = CAKeyframeAnimation(keyPath: .opacity)
     opacityAnimation.keyTimes = [0, 0.7, 1]
     opacityAnimation.timingFunctions = [timingFunction, timingFunction]
     opacityAnimation.values = [1, 0.7, 0]

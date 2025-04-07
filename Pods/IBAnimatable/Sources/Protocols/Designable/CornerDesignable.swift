@@ -21,7 +21,7 @@ public protocol CornerDesignable: class {
 
 public extension CornerDesignable where Self: UIView {
 
-  public func configureCornerRadius() {
+  func configureCornerRadius() {
     configureCornerRadius(in: self)
   }
 
@@ -31,7 +31,7 @@ public extension CornerDesignable where Self: UIView {
 
 public extension CornerDesignable where Self: UICollectionViewCell {
 
-  public func configureCornerRadius() {
+  func configureCornerRadius() {
     if !cornerRadius.isNaN && cornerRadius > 0 {
       // Remove any previous corner mask, i.e. coming from UIView type implementation
       if layer.mask?.name == "cornerSideLayer" {
@@ -77,20 +77,7 @@ extension CornerDesignable {
     cornerSideLayer.frame = CGRect(origin: .zero, size: bounds.size)
 
     let cornerRadii = CGSize(width: cornerRadius, height: cornerRadius)
-    var roundingCorners: UIRectCorner = []
-    if cornerSides.contains(.topLeft) {
-      roundingCorners.insert(.topLeft)
-    }
-    if cornerSides.contains(.topRight) {
-      roundingCorners.insert(.topRight)
-    }
-    if cornerSides.contains(.bottomLeft) {
-      roundingCorners.insert(.bottomLeft)
-    }
-    if cornerSides.contains(.bottomRight) {
-      roundingCorners.insert(.bottomRight)
-    }
-
+    let roundingCorners: UIRectCorner = cornerSides.rectCorner
     cornerSideLayer.path = UIBezierPath(roundedRect: bounds,
                                         byRoundingCorners: roundingCorners,
                                         cornerRadii: cornerRadii).cgPath

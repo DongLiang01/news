@@ -6,15 +6,14 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS) || os(macOS)
+#if os(iOS) || os(tvOS) || os(visionOS) || os(macOS)
 
 import RxSwift
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
     import UIKit
 
     typealias Control = UIKit.UIControl
-    typealias ControlEvents = UIKit.UIControlEvents
 #elseif os(macOS)
     import Cocoa
 
@@ -28,13 +27,13 @@ final class ControlTarget: RxTarget {
     let selector: Selector = #selector(ControlTarget.eventHandler(_:))
 
     weak var control: Control?
-#if os(iOS) || os(tvOS)
-    let controlEvents: UIControlEvents
+#if os(iOS) || os(tvOS) || os(visionOS)
+    let controlEvents: UIControl.Event
 #endif
     var callback: Callback?
-    #if os(iOS) || os(tvOS)
-    init(control: Control, controlEvents: UIControlEvents, callback: @escaping Callback) {
-        MainScheduler.ensureExecutingOnScheduler()
+    #if os(iOS) || os(tvOS) || os(visionOS)
+    init(control: Control, controlEvents: UIControl.Event, callback: @escaping Callback) {
+        MainScheduler.ensureRunningOnMainThread()
 
         self.control = control
         self.controlEvents = controlEvents
@@ -51,7 +50,7 @@ final class ControlTarget: RxTarget {
     }
 #elseif os(macOS)
     init(control: Control, callback: @escaping Callback) {
-        MainScheduler.ensureExecutingOnScheduler()
+        MainScheduler.ensureRunningOnMainThread()
 
         self.control = control
         self.callback = callback
@@ -59,9 +58,9 @@ final class ControlTarget: RxTarget {
         super.init()
 
         control.target = self
-        control.action = selector
+        control.action = self.selector
 
-        let method = self.method(for: selector)
+        let method = self.method(for: self.selector)
         if method == nil {
             rxFatalError("Can't find method")
         }
@@ -76,7 +75,7 @@ final class ControlTarget: RxTarget {
 
     override func dispose() {
         super.dispose()
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
         self.control?.removeTarget(self, action: self.selector, for: self.controlEvents)
 #elseif os(macOS)
         self.control?.target = nil

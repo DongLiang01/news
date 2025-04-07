@@ -32,8 +32,8 @@ public class AnimatablePresentationController: UIPresentationController {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
   }
 
   // MARK: Actions
@@ -93,19 +93,29 @@ extension AnimatablePresentationController {
       return
     }
 
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(notification:)),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(notification:)),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
   }
 
   @objc
   func keyboardWillShow(notification: NSNotification) {
-    if let keyboardFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+    if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
       let presentedFrame = frameOfPresentedViewInContainerView
-      let duration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue ?? 0.5
+      let duration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue ?? 0.5
       let translatedFrame = presentationConfiguration.keyboardTranslation.translationFrame(keyboardFrame: keyboardFrame,
                                                                                            presentedFrame: presentedFrame)
 
-      let curve = UIViewAnimationOptions(rawValue: UInt(duration))
+      let curve = UIView.AnimationOptions(rawValue: UInt(duration))
       UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
         self.presentedView?.frame = translatedFrame
       }, completion: nil)
@@ -114,8 +124,8 @@ extension AnimatablePresentationController {
 
   @objc
   func keyboardWillHide(notification: NSNotification) {
-    let duration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue ?? 0.5
-    let curve = UIViewAnimationOptions(rawValue: UInt(duration))
+    let duration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue ?? 0.5
+    let curve = UIView.AnimationOptions(rawValue: UInt(duration))
     UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
       self.presentedView!.frame = self.frameOfPresentedViewInContainerView
     }, completion: nil)
@@ -127,14 +137,7 @@ extension AnimatablePresentationController {
 
 private extension AnimatablePresentationController {
 
-  var modalSize: CGSize {
-    let containerSize = containerFrame.size
-    let width = CGFloat(presentationConfiguration.modalSize.0.width(parentSize: containerSize))
-    let height = CGFloat(presentationConfiguration.modalSize.1.height(parentSize: containerSize))
-    return CGSize(width: width, height: height)
-  }
-
-  var modalCenter: CGPoint? {
+  func modalCenter(for modalSize: CGSize) -> CGPoint? {
     return presentationConfiguration.modalPosition.modalCenter(in: containerFrame, modalSize: modalSize)
   }
 
@@ -156,12 +159,12 @@ public extension AnimatablePresentationController {
 
   // MARK: Presentation
 
-  public override var frameOfPresentedViewInContainerView: CGRect {
+  override var frameOfPresentedViewInContainerView: CGRect {
     let containerBounds = containerFrame
     var presentedViewFrame = CGRect.zero
     let sizeForChildContentContainer = size(forChildContentContainer: presentedViewController, withParentContainerSize: containerBounds.size)
     let origin: CGPoint
-    if let center = modalCenter {
+    if let center = modalCenter(for: sizeForChildContentContainer) {
       origin = calculateOrigin(center: center, size: sizeForChildContentContainer)
     } else {
       origin = modalOrigin ?? .zero
@@ -173,7 +176,26 @@ public extension AnimatablePresentationController {
   }
 
   override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-    return modalSize
+
+    let preferredContentSize = container.preferredContentSize
+
+    let widthSize = presentationConfiguration.modalSize.0
+    let heightSize = presentationConfiguration.modalSize.1
+
+    let width: CGFloat
+    if preferredContentSize.width != 0, case .preferred = widthSize {
+      width = preferredContentSize.width
+    } else {
+      width = CGFloat(widthSize.width(parentSize: parentSize))
+    }
+    let height: CGFloat
+    if preferredContentSize.height != 0, case .preferred = heightSize {
+      height = preferredContentSize.height
+    } else {
+      height = CGFloat(heightSize.height(parentSize: parentSize))
+    }
+
+    return CGSize(width: width, height: height)
   }
 
   override func containerViewWillLayoutSubviews() {
@@ -201,7 +223,7 @@ public extension AnimatablePresentationController {
     }
   }
 
-  public override func presentationTransitionDidEnd(_ completed: Bool) {
+  override func presentationTransitionDidEnd(_ completed: Bool) {
     if !completed {
       dimmingView.removeFromSuperview()
     }
@@ -217,7 +239,7 @@ public extension AnimatablePresentationController {
     }
   }
 
-  public override func dismissalTransitionDidEnd(_ completed: Bool) {
+  override func dismissalTransitionDidEnd(_ completed: Bool) {
     if completed {
       dimmingView.removeFromSuperview()
     }

@@ -23,6 +23,7 @@ public class ActivityIndicatorAnimationBallSpinFadeLoader: ActivityIndicatorAnim
     let beginTimes: [CFTimeInterval] = [0, 0.12, 0.24, 0.36, 0.48, 0.6, 0.72, 0.84]
 
     // Draw circles
+    let animation = defaultAnimation
     for i in 0 ..< 8 {
       let circle = makeCircleLayer(angle: CGFloat.pi / 4 * CGFloat(i),
                                    size: circleSize,
@@ -55,7 +56,7 @@ public class ActivityIndicatorAnimationBallSpinFadeLoader: ActivityIndicatorAnim
 
 private extension ActivityIndicatorAnimationBallSpinFadeLoader {
 
-  var animation: CAAnimationGroup {
+  var defaultAnimation: CAAnimationGroup {
     let animation = CAAnimationGroup()
     animation.animations = [scaleAnimation, opacityAnimation]
     animation.timingFunctionType = .linear
@@ -66,7 +67,7 @@ private extension ActivityIndicatorAnimationBallSpinFadeLoader {
   }
 
   var scaleAnimation: CAKeyframeAnimation {
-    let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+    let scaleAnimation = CAKeyframeAnimation(keyPath: .scale)
     scaleAnimation.keyTimes = [0, 0.5, 1]
     scaleAnimation.values = [1, 0.4, 1]
     scaleAnimation.duration = duration
@@ -74,7 +75,7 @@ private extension ActivityIndicatorAnimationBallSpinFadeLoader {
   }
 
   var opacityAnimation: CAKeyframeAnimation {
-    let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+    let opacityAnimation = CAKeyframeAnimation(keyPath: .opacity)
     opacityAnimation.keyTimes = [0, 0.5, 1]
     opacityAnimation.values = [1, 0.3, 1]
     opacityAnimation.duration = duration

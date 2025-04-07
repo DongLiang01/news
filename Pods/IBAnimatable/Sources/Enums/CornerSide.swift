@@ -15,6 +15,10 @@ public enum CornerSide: String {
   case bottomRight = "bottomright"
 }
 
+#if swift(>=4.2)
+extension CornerSide: CaseIterable {}
+#endif
+
 public struct CornerSides: OptionSet {
   public let rawValue: Int
 

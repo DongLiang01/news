@@ -16,7 +16,7 @@ public class ActivityIndicatorAnimationTriangleSkewSpin: ActivityIndicatorAnimat
   public func configureAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
     let x = (layer.bounds.size.width - size.width) / 2
     let y = (layer.bounds.size.height - size.height) / 2
-    let triangle = ActivityIndicatorShape.triangle.makeLayer(size: size, color: color)
+    let triangle = ActivityIndicatorShape.offsetTriangle.makeLayer(size: size, color: color)
     triangle.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
     triangle.add(defaultAnimation, forKey: "animation")
     layer.addSublayer(triangle)
@@ -30,7 +30,7 @@ private extension ActivityIndicatorAnimationTriangleSkewSpin {
 
   var defaultAnimation: CAKeyframeAnimation {
     let timingFunction = CAMediaTimingFunction(controlPoints: 0.09, 0.57, 0.49, 0.9)
-    let animation = CAKeyframeAnimation(keyPath: "transform")
+    let animation = CAKeyframeAnimation(keyPath: .transform)
     animation.keyTimes = [0, 0.25, 0.5, 0.75, 1]
     animation.timingFunctions = [timingFunction, timingFunction, timingFunction, timingFunction]
     animation.values = [

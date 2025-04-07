@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 
 import UIKit
 import RxSwift
@@ -15,7 +15,7 @@ import RxSwift
 final class GestureTarget<Recognizer: UIGestureRecognizer>: RxTarget {
     typealias Callback = (Recognizer) -> Void
     
-    let selector = #selector(ControlTarget.eventHandler(_:))
+    let selector = #selector(GestureTarget.eventHandler(_:))
     
     weak var gestureRecognizer: Recognizer?
     var callback: Callback?
@@ -53,20 +53,19 @@ extension Reactive where Base: UIGestureRecognizer {
     /// Reactive wrapper for gesture recognizer events.
     public var event: ControlEvent<Base> {
         let source: Observable<Base> = Observable.create { [weak control = self.base] observer in
-            MainScheduler.ensureExecutingOnScheduler()
+            MainScheduler.ensureRunningOnMainThread()
 
             guard let control = control else {
                 observer.on(.completed)
                 return Disposables.create()
             }
             
-            let observer = GestureTarget(control) {
-                control in
+            let observer = GestureTarget(control) { control in
                 observer.on(.next(control))
             }
             
             return observer
-        }.takeUntil(deallocated)
+        }.take(until: deallocated)
         
         return ControlEvent(events: source)
     }

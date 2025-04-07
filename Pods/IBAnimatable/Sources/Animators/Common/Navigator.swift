@@ -47,7 +47,7 @@ public class Navigator: NSObject {
 extension Navigator: UINavigationControllerDelegate {
   // MARK: - animation controller
   public func navigationController(_ navigationController: UINavigationController,
-                                   animationControllerFor operation: UINavigationControllerOperation,
+                                   animationControllerFor operation: UINavigationController.Operation,
                                    from fromVC: UIViewController,
                                    to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     interactiveAnimator?.connectGestureRecognizer(to: toVC)
@@ -85,11 +85,22 @@ extension Navigator: UITabBarControllerDelegate {
 
     interactiveAnimator?.connectGestureRecognizer(to: toVC)
 
+    #if swift(>=4.2)
+    guard let viewControllers = tabBarController.viewControllers,
+      let fromVCIndex = viewControllers.firstIndex(of: fromVC),
+      let toVCIndex = viewControllers.firstIndex(of: toVC) else {
+        return nil
+    }
+
+    #else
     guard let viewControllers = tabBarController.viewControllers,
       let fromVCIndex = viewControllers.index(of: fromVC),
       let toVCIndex = viewControllers.index(of: toVC) else {
         return nil
     }
+
+    #endif
+
     if toVCIndex > fromVCIndex, let reverseTransitionAnimationType = animator?.reverseAnimationType {
       return AnimatorFactory.makeAnimator(transitionAnimationType: reverseTransitionAnimationType, transitionDuration: transitionDuration)
     }

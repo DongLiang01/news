@@ -63,13 +63,13 @@ open class AnimatableModalViewController: UIViewController, PresentationDesignab
   }
   @IBInspectable var _modalWidth: String? {
     didSet {
-      let modalWidth = PresentationModalSize(string: _modalWidth) ?? .half
+      let modalWidth = PresentationModalSize(string: _modalWidth) ?? .default
       modalSize = (modalWidth, modalSize.height)
     }
   }
   @IBInspectable var _modalHeight: String? {
     didSet {
-      let modalHeight = PresentationModalSize(string: _modalHeight) ?? .half
+      let modalHeight = PresentationModalSize(string: _modalHeight) ?? .default
       modalSize = (modalSize.width, modalHeight)
     }
   }
@@ -105,14 +105,14 @@ open class AnimatableModalViewController: UIViewController, PresentationDesignab
   }
 
   /// The blur effect style of the dimming view. If use this property, `backgroundColor` and `opacity` are ignored.
-  open var blurEffectStyle: UIBlurEffectStyle? {
+  open var blurEffectStyle: UIBlurEffect.Style? {
     didSet {
       presenter?.presentationConfiguration?.blurEffectStyle = blurEffectStyle
     }
   }
   @IBInspectable var _blurEffectStyle: String? {
     didSet {
-      blurEffectStyle = UIBlurEffectStyle(string: _blurEffectStyle)
+      blurEffectStyle = UIBlurEffect.Style(string: _blurEffectStyle)
     }
   }
 

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 
 import UIKit
 import RxSwift
@@ -21,7 +21,7 @@ public protocol RxCollectionViewDataSourceType /*: UICollectionViewDataSource*/ 
     ///
     /// - parameter collectionView: Bound collection view.
     /// - parameter observedEvent: Event
-    func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) -> Void
+    func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>)
 }
 
 #endif

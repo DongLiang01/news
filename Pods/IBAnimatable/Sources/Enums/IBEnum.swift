@@ -18,24 +18,6 @@ public protocol IBEnum {
   init?(string: String?)
 }
 
-public extension IBEnum {
-  /**
-   Helper function that returns a tuple containing the name and params from a string `string`
-
-   - Parameter from string: The string to be converted into `enum`.
-   - Discussion: the string format is like "enumName(param1,param2,param3)"
-   - Returns: A tuple containing the name and an array of parameter string
-   */
-  static func extractNameAndParams(from string: String) -> (name: String, params: [String]) {
-    let tokens = string.lowercased().components(separatedBy: CharacterSet(charactersIn: "()")).filter { !$0.isEmpty }
-    let name = tokens.first ?? ""
-    let paramsString = tokens.count >= 2 ? tokens[1] : ""
-    let params = paramsString.components(separatedBy: ",").filter { !$0.isEmpty }.map { $0.trimmingCharacters(in: .whitespaces) }
-
-    return (name: name, params: params)
-  }
-}
-
 extension IBEnum {
   init(string: String?, default defaultValue: Self) {
     self = Self(string: string) ?? defaultValue
@@ -43,16 +25,34 @@ extension IBEnum {
 }
 
 /// IBEnum provide default initializer for RawRepresentable Enum
+#if swift(>=4.2)
+public extension IBEnum where Self: RawRepresentable & CaseIterable {
+  init?(string: String?) {
+    if let item = getCase(for: string, from: iterateEnum(from: Self.self)) {
+      self = item
+    } else {
+      return nil
+    }
+  }
+}
+#else
 public extension IBEnum where Self: RawRepresentable & Hashable {
   init?(string: String?) {
-    let lowerString = string?.lowercased()
-    let iterator = iterateEnum(from: Self.self)
-    for e in iterator {
-      if String(describing: e.rawValue).lowercased() == lowerString {
-        self = e as Self
-        return
-      }
+    if let item = getCase(for: string, from: iterateEnum(from: Self.self)) {
+      self = item
+    } else {
+      return nil
     }
-    return nil
   }
+}
+#endif
+
+private func getCase<T: IBEnum & RawRepresentable>(for string: String?, from iterator: AnyIterator<T>) -> T? {
+  let lowerString = string?.lowercased()
+  for item in iterator {
+    if String(describing: item.rawValue).lowercased() == lowerString {
+      return item
+    }
+  }
+  return nil
 }

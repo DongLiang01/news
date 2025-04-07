@@ -20,6 +20,7 @@ public enum PresentationModalSize: IBEnum {
   case goldenSmall
   case goldenLarge
   case custom(size: Float)
+  case preferred
 
   func width(parentSize: CGSize) -> Float {
     return size(for: Float(parentSize.width))
@@ -28,6 +29,8 @@ public enum PresentationModalSize: IBEnum {
   func height(parentSize: CGSize) -> Float {
     return size(for: Float(parentSize.height))
   }
+
+  public static let `default`: PresentationModalSize = .half
 
   private func size(for value: Float) -> Float {
     switch self {
@@ -57,6 +60,8 @@ public enum PresentationModalSize: IBEnum {
       return floorf(value / goldenRatio)
     case .custom(let size):
       return size
+    case .preferred:
+      return PresentationModalSize.default.size(for: value)
     }
   }
 
@@ -69,8 +74,9 @@ public extension PresentationModalSize {
     guard let string = string else {
       return nil
     }
-
-    let (name, params) = PresentationModalSize.extractNameAndParams(from: string)
+    guard let (name, params) = string.extractNameAndParams() else {
+      return nil
+    }
     switch name {
     case "half":
       self = .half
@@ -97,7 +103,9 @@ public extension PresentationModalSize {
     case "goldenlarge", "goldenratio":
       self = .goldenLarge
     case "custom" where params.count == 1:
-      self = .custom(size: params[0].toFloat() ?? 0)
+      self = .custom(size: params.toFloat(0) ?? 0)
+    case "preferred":
+      self = .preferred
     default:
       return nil
     }

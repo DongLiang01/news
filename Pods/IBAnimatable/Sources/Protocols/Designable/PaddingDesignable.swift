@@ -26,11 +26,11 @@ public protocol PaddingDesignable: class {
 
 public extension PaddingDesignable where Self: UITextField {
 
-  public func paddedRect(forBounds bounds: CGRect) -> CGRect {
+  func paddedRect(forBounds bounds: CGRect) -> CGRect {
     if paddingSide.isNaN && paddingLeft.isNaN && paddingRight.isNaN {
       return bounds
     }
-    return UIEdgeInsetsInsetRect(bounds, paddingInsets)
+    return bounds.inset(by: paddingInsets)
   }
 
   private var paddingInsets: UIEdgeInsets {

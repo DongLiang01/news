@@ -17,6 +17,23 @@ struct AnimationConfiguration {
   let timingFunction: TimingFunctionType
 }
 
+extension AnimationConfiguration {
+
+  /// Options for spring animation.
+  var options: UIView.AnimationOptions {
+    if let curveOption = timingFunction.viewAnimationCurveOption {
+      return [
+        .allowUserInteraction,
+        curveOption,
+        .overrideInheritedCurve,
+        .overrideInheritedOptions,
+        .overrideInheritedDuration]
+    }
+    return [.allowUserInteraction]
+  }
+
+}
+
 public class AnimationPromise<T: UIView> where T: Animatable {
 
   private var view: T
